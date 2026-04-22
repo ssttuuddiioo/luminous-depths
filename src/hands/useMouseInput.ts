@@ -23,6 +23,21 @@ export function useMouseInput(enabled: boolean) {
       return;
     }
     let down = false;
+    let rafId = 0;
+    // Exponential decay of velocity when no mousemove fires this frame —
+    // half-life ≈ 4 frames, so within ~70ms of holding still the finger
+    // reads as motionless to downstream consumers.
+    const VEL_DECAY_PER_FRAME = 0.82;
+    const velocityDecayLoop = () => {
+      rafId = requestAnimationFrame(velocityDecayLoop);
+      if (!down) return;
+      const s = stateRef.current;
+      s.vx *= VEL_DECAY_PER_FRAME;
+      s.vy *= VEL_DECAY_PER_FRAME;
+      if (Math.abs(s.vx) < 1e-5) s.vx = 0;
+      if (Math.abs(s.vy) < 1e-5) s.vy = 0;
+    };
+    rafId = requestAnimationFrame(velocityDecayLoop);
 
     const isUi = (t: EventTarget | null): boolean => {
       const el = t as HTMLElement | null;
@@ -73,6 +88,7 @@ export function useMouseInput(enabled: boolean) {
     window.addEventListener('mouseup', onUp);
     window.addEventListener('mouseleave', onUp);
     return () => {
+      cancelAnimationFrame(rafId);
       window.removeEventListener('mousedown', onDown);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseup', onUp);

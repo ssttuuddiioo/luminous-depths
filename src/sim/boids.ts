@@ -1,6 +1,11 @@
 import type { FingertipState } from '../hands/useHandLandmarker';
 import type { FishParams } from './params';
 
+function smoothstep(edge0: number, edge1: number, x: number): number {
+  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
+}
+
 // CPU boids with per-fish depth. Coordinates in normalized [0,1] UV with
 // y=0 at top, matching the fingertip convention used everywhere else.
 // Velocity in UV/second. Naive O(N²) — fine for a few hundred fish.
@@ -118,7 +123,9 @@ export class Boids {
         cy * p.cohesionWeight +
         sy * p.separationWeight;
 
-      // Fingertip repulsion — each finger pushes radially with falloff.
+      // Fingertip influence — speed blends between attract (still finger
+      // gathers fish) and repel (moving finger scatters them). Smoothstep
+      // between stillSpeed and moveSpeed.
       for (const f of fingertips) {
         const dx = ixi - f.x;
         const dy = iyi - f.y;
@@ -126,7 +133,11 @@ export class Boids {
         if (d2 < repR2 && d2 > 1e-8) {
           const d = Math.sqrt(d2);
           const falloff = 1.0 - d / repR;
-          const mag = (p.repulsionStrength * falloff * falloff) / d;
+          const speed = Math.hypot(f.vx, f.vy);
+          const t = smoothstep(p.stillSpeed, p.moveSpeed, speed);
+          // Negative when still (pulls inward, i.e. flips radial dir).
+          const signed = -p.attractStrength * (1 - t) + p.repulsionStrength * t;
+          const mag = (signed * falloff * falloff) / d;
           fx[i] += dx * mag;
           fy[i] += dy * mag;
         }

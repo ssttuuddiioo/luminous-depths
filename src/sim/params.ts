@@ -130,6 +130,9 @@ export type FishParams = {
   separationWeight: number;
   repulsionRadius: number;
   repulsionStrength: number;
+  attractStrength: number;
+  stillSpeed: number;
+  moveSpeed: number;
   maxSpeed: number;
   damping: number;
   depthDrift: number;
@@ -149,6 +152,9 @@ export const DEFAULT_FISH_PARAMS: FishParams = {
   separationWeight: 2.0,
   repulsionRadius: 0.15,
   repulsionStrength: 4.0,
+  attractStrength: 2.5,
+  stillSpeed: 0.02,
+  moveSpeed: 0.25,
   maxSpeed: 0.35,
   damping: 0.99,
   depthDrift: 0.3,
@@ -191,6 +197,27 @@ export const FISH_SCHEMA: SliderSchema<keyof FishParams>[] = [
     min: 0,
     max: 15,
     step: 0.1,
+  },
+  {
+    key: 'attractStrength',
+    label: 'attract F',
+    min: 0,
+    max: 15,
+    step: 0.1,
+  },
+  {
+    key: 'stillSpeed',
+    label: 'still <',
+    min: 0.001,
+    max: 0.2,
+    step: 0.002,
+  },
+  {
+    key: 'moveSpeed',
+    label: 'move >',
+    min: 0.05,
+    max: 1.0,
+    step: 0.01,
   },
   { key: 'maxSpeed', label: 'max spd', min: 0.05, max: 1.5, step: 0.01 },
   { key: 'damping', label: 'damping', min: 0.9, max: 1.0, step: 0.002 },
