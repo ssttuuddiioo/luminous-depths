@@ -1,0 +1,83 @@
+.tuning-panel {
+  min-width: 260px;
+  padding: 12px 14px;
+  background: rgba(10, 10, 12, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  user-select: none;
+  z-index: 10;
+}
+
+.tuning-title {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tuning-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 48px;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.tuning-label {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.tuning-value {
+  color: rgba(127, 223, 255, 0.9);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tuning-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+  margin: 0;
+  cursor: ew-resize;
+}
+
+.tuning-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 1px;
+}
+
+.tuning-slider::-moz-range-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 1px;
+}
+
+.tuning-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
+  background: #7fdfff;
+  border: none;
+  border-radius: 50%;
+  cursor: ew-resize;
+}
+
+.tuning-slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: #7fdfff;
+  border: none;
+  border-radius: 50%;
+  cursor: ew-resize;
+}

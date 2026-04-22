@@ -1,0 +1,80 @@
+.hidden-video {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+.panels {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+  pointer-events: auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.mode-toggle {
+  position: fixed;
+  left: 12px;
+  top: 12px;
+  display: flex;
+  gap: 1px;
+  background: rgba(10, 10, 12, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 2px;
+  z-index: 10;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.mode-toggle button {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: inherit;
+}
+
+.mode-toggle button:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.mode-toggle button.active {
+  background: rgba(127, 223, 255, 0.15);
+  color: #7fdfff;
+}
+
+.status {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  user-select: none;
+}
